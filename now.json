@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "name": "Fifo_adoption_Dana_Jack",
-  "alias": "Fifo_adoption_Dana_Jack",
+  "name": "fifo-adoption-dana-jack",
+  "alias": "fifo-adoption-dana-jack",
   "routes": [
     {
       "src": "^/static/(.*)",
