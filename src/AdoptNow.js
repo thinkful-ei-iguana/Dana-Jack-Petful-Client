@@ -31,7 +31,8 @@ export class AdoptNow extends React.Component {
       )
     };
   }
-  componentDidMount() {
+
+  getQuedPets() {
     Promise.all([
       fetch(
         'https://tranquil-caverns-87214.herokuapp.com/api/cat'
@@ -72,6 +73,11 @@ export class AdoptNow extends React.Component {
         })
       );
   }
+
+  componentDidMount() {
+    this.getQuedPets();
+  }
+
   people = [
     'Tauhida',
     'Jack',
