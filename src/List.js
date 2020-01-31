@@ -33,7 +33,6 @@ class List extends React.Component {
                         people: temp
                     })
                 }).then(() =>{
-                   // this.props.getPets();
                 })
 
             }

@@ -138,6 +138,10 @@ export class AdoptNow extends React.Component {
           <li></li>
         </ul>
 
+        <button className="AdoptCatNow__button">
+          Adopt this Cat Now! (if it's your turn)
+        </button>
+
         <img
           src={
             this.state.upNext.dog.imageURL
@@ -177,8 +181,8 @@ export class AdoptNow extends React.Component {
           </li>
           <li></li>
         </ul>
-        <button className="AdoptNow__button">
-          Adopt Now! (if it's your turn)
+        <button className="AdoptDogNow__button">
+          Adopt this Dog Now! (if it's your turn)
         </button>
         <List getPets={this.getQuedPets()}></List>
       </div>
