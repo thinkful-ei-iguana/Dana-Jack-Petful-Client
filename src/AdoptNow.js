@@ -26,7 +26,9 @@ export class AdoptNow extends React.Component {
           breed: '',
           story: ''
         }
-      }
+      },
+      yourTurn: false,
+      waitLength: 0
     };
   }
 
@@ -86,7 +88,8 @@ export class AdoptNow extends React.Component {
     }
     temp.enqueue('You!');
     this.setState({
-      people: temp
+      people: temp,
+      waitLength: people.length
     })
   }
 
@@ -99,13 +102,23 @@ export class AdoptNow extends React.Component {
           'https://tranquil-caverns-87214.herokuapp.com/api/cat',
           { method: 'DELETE' }
         ).then(() => {
+          let turn = false;
+          if(this.state.waitLength <= 0){
+            turn = true;
+          }
           this.setState({
-            people: temp
+            people: temp,
+            waitLength: this.state.waitLength -1,
+            yourTurn: turn
           })
         }).then(() => {
           this.getQuedPets();
         })
 
+      } else {
+        this.setState({
+          yourTurn: true
+        })
       }
     }, 3000)
   }
