@@ -2,6 +2,9 @@ import React from 'react';
 import Queue from './queue-helper'
 
 class List extends React.Component {
+    constructor(props){
+        super(props);  
+    }
     state = {
         people: new Queue()
     }
@@ -23,12 +26,14 @@ class List extends React.Component {
             if (temp.first.value !== 'You!') {
                 temp.dequeue();
                 fetch(
-                    'https://tranquil-caverns-87214.herokuapp.com/api/dog',
+                    'https://tranquil-caverns-87214.herokuapp.com/api/cat',
                     { method: 'DELETE' }
                 ).then(() => {
                     this.setState({
                         people: temp
                     })
+                }).then(() =>{
+                   // this.props.getPets();
                 })
 
             }
@@ -40,7 +45,7 @@ class List extends React.Component {
     }
 
     componentWillMount() {
-        const people = ['a'];
+        const people = ['a', 'b'];
         this.QueueUpPeople(people);
     }
 

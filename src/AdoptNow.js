@@ -99,7 +99,7 @@ export class AdoptNow extends React.Component {
       <div className="AdoptNow">
         <img
           src={
-            this.state.upNext.imageURL
+            this.state.upNext.cat.imageURL
           }
           alt={
             this.state.upNext.cat
@@ -138,6 +138,16 @@ export class AdoptNow extends React.Component {
           <li></li>
         </ul>
 
+        <img
+          src={
+            this.state.upNext.dog.imageURL
+          }
+          alt={
+            this.state.upNext.dog
+              .imageDescription
+          }
+          width="396"
+        ></img>
         <ul className="dogstats">
           <li className="AdoptNow__name">
             name:{' '}
@@ -170,8 +180,9 @@ export class AdoptNow extends React.Component {
         <button className="AdoptNow__button">
           Adopt Now! (if it's your turn)
         </button>
-        <List></List>
+        <List getPets={this.getQuedPets()}></List>
       </div>
     );
   }
 }
+//{/**/}
