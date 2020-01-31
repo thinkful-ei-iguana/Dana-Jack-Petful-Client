@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Queue from './queue-helper';
-import List from './List'
+import List from './List';
 
 export class AdoptNow extends React.Component {
   constructor(props) {
@@ -26,7 +26,8 @@ export class AdoptNow extends React.Component {
           breed: '',
           story: ''
         }
-      }
+      },
+      yourTurn: false
     };
   }
 
@@ -77,17 +78,19 @@ export class AdoptNow extends React.Component {
     this.DequeuePeople();
   }
 
-
-
   QueueUpPeople(people) {
     let temp = new Queue();
-    for (let i = 0; i < people.length; i++) {
+    for (
+      let i = 0;
+      i < people.length;
+      i++
+    ) {
       temp.enqueue(people[i]);
     }
     temp.enqueue('You!');
     this.setState({
       people: temp
-    })
+    });
   }
 
   DequeuePeople() {
@@ -98,32 +101,43 @@ export class AdoptNow extends React.Component {
         fetch(
           'https://tranquil-caverns-87214.herokuapp.com/api/cat',
           { method: 'DELETE' }
-        ).then(() => {
-          this.setState({
-            people: temp
+        )
+          .then(() => {
+            this.setState({
+              people: temp
+            });
           })
-        }).then(() => {
-          this.getQuedPets();
-        })
-
+          .then(() => {
+            this.getQuedPets();
+          });
       }
-    }, 3000)
+    }, 3000);
   }
 
   componentWillMount() {
-    const people = ['Tauhida',
+    const people = [
+      'Tauhida',
       'Jack',
-      'Dana',
+      'Dana'
     ];
     this.QueueUpPeople(people);
   }
 
   render() {
+    let renderbutton = null;
+    if (yourTurn) {
+      renderbutton = (
+        <button className="AdoptDogNow__button">
+          Adopt this Animal Now!
+        </button>
+      );
+    }
     return (
       <div className="AdoptNow">
         <img
           src={
-            this.state.upNext.cat.imageURL
+            this.state.upNext.cat
+              .imageURL
           }
           alt={
             this.state.upNext.cat
@@ -162,13 +176,11 @@ export class AdoptNow extends React.Component {
           <li></li>
         </ul>
 
-        <button className="AdoptCatNow__button" onClick={e => this.AdoptCat()}>
-          Adopt this Cat Now! (if it's your turn)
-        </button>
-
+        {renderbutton}
         <img
           src={
-            this.state.upNext.dog.imageURL
+            this.state.upNext.dog
+              .imageURL
           }
           alt={
             this.state.upNext.dog
@@ -205,10 +217,11 @@ export class AdoptNow extends React.Component {
           </li>
           <li></li>
         </ul>
-        <button className="AdoptDogNow__button" onClick={e => this.AdoptDog()}>
-          Adopt this Dog Now! (if it's your turn)
-        </button>
-        <List people={this.state.people}></List>
+
+        {renderbutton}
+        <List
+          people={this.state.people}
+        ></List>
       </div>
     );
   }
