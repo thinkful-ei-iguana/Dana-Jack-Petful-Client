@@ -1,21 +1,92 @@
 import * as React from 'react';
+import Queue from './queue-helper';
 
 export class AdoptNow extends React.Component {
   constructor(props) {
     super(props);
-    state = {
+    this.state = {
       upNext: {
-        imageURL: '',
-        imageDescription: '',
-        name: '',
-        sex: '',
-        age: 0,
-        breed: '',
-        story: ''
-      }
+        dog: {
+          imageURL: '',
+          imageDescription: '',
+          name: '',
+          sex: '',
+          age: 0,
+          breed: '',
+          story: ''
+        },
+        cat: {
+          imageURL: '',
+          imageDescription: '',
+          name: '',
+          sex: '',
+          age: 0,
+          breed: '',
+          story: ''
+        }
+      },
+      queue: new Queue().enqueue(
+        this.people[0]
+      )
     };
   }
-
+  componentDidMount() {
+    Promise.all([
+      fetch(
+        'https://tranquil-caverns-87214.herokuapp.com/api/cat'
+      ),
+      fetch(
+        'https://tranquil-caverns-87214.herokuapp.com/api/dog'
+      )
+    ])
+      .then(([catrsp, dogrsp]) => {
+        if (!catrsp.ok) {
+          throw new Error(
+            'something went wrong'
+          );
+        }
+        if (!dogrsp.ok) {
+          throw new Error(
+            'something went wrong'
+          );
+        }
+        return Promise.all([
+          catrsp.json(),
+          dogrsp.json()
+        ]);
+      })
+      .then(([catjson, dogjson]) => {
+        this.setState({
+          ...this.state,
+          upNext: {
+            dog: dogjson,
+            cat: catjson
+          }
+        });
+      })
+      .catch(e =>
+        this.setState({
+          ...this.state,
+          error: e
+        })
+      );
+  }
+  people = [
+    'Tauhida',
+    'Jack',
+    'Dana',
+    'Benedict Cumberbatch',
+    'Black Lively',
+    'Ellen Degeneres',
+    'Nick Cage',
+    `Nick Cage's Clone`,
+    'Cher',
+    'Mr. Bean',
+    'Mr. Snuffleuffagus',
+    'Bert',
+    'Juanberto',
+    'Jillberto'
+  ];
   render() {
     return (
       <div className="AdoptNow">
@@ -23,27 +94,75 @@ export class AdoptNow extends React.Component {
           src={
             this.state.upNext.imageURL
           }
+          alt={
+            this.state.upNext.cat
+              .imageDescription
+          }
           width="396"
         ></img>
 
-        <ul>
+        <ul className="catstats">
           <li className="AdoptNow__name">
-            name:
+            name:{' '}
+            {this.state.upNext.cat.name}
           </li>
           <li className="AdoptNow__sex">
-            sex:
+            sex:{' '}
+            {this.state.upNext.cat.sex}
           </li>
           <li className="AdoptNow__age">
-            age:
+            age:{' '}
+            {this.state.upNext.cat.age}
           </li>
           <li className="AdoptNow__breed">
-            breed:
+            breed:{' '}
+            {
+              this.state.upNext.cat
+                .breed
+            }
           </li>
           <li className="AdoptNow__story">
-            story:
+            story:{' '}
+            {
+              this.state.upNext.cat
+                .story
+            }
           </li>
           <li></li>
         </ul>
+
+        <ul className="dogstats">
+          <li className="AdoptNow__name">
+            name:{' '}
+            {this.state.upNext.dog.name}
+          </li>
+          <li className="AdoptNow__sex">
+            sex:{' '}
+            {this.state.upNext.dog.sex}
+          </li>
+          <li className="AdoptNow__age">
+            age:{' '}
+            {this.state.upNext.dog.age}
+          </li>
+          <li className="AdoptNow__breed">
+            breed:{' '}
+            {
+              this.state.upNext.dog
+                .breed
+            }
+          </li>
+          <li className="AdoptNow__story">
+            story:{' '}
+            {
+              this.state.upNext.dog
+                .story
+            }
+          </li>
+          <li></li>
+        </ul>
+        <button className="AdoptNow__button">
+          Adopt Now! (if it's your turn)
+        </button>
       </div>
     );
   }

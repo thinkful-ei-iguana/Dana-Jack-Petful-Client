@@ -2,6 +2,7 @@ import React, {
   Component
 } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class AdoptionProcess extends Component {
   constructor(props) {
@@ -67,9 +68,12 @@ class AdoptionProcess extends Component {
           aliquam aperiam nemo sapiente
           molestiae.
         </p>
-        <button className="StartProcess">
+        <Link
+          className="StartProcess"
+          to="/adopt"
+        >
           Start Adoption Process
-        </button>
+        </Link>
       </div>
     );
   }
