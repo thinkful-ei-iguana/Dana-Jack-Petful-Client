@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Queue from './queue-helper';
+import List from './List'
 
 export class AdoptNow extends React.Component {
   constructor(props) {
@@ -163,6 +164,7 @@ export class AdoptNow extends React.Component {
         <button className="AdoptNow__button">
           Adopt Now! (if it's your turn)
         </button>
+        <List></List>
       </div>
     );
   }
