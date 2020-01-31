@@ -6,6 +6,7 @@ export class AdoptNow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      people: new Queue(),
       upNext: {
         dog: {
           imageURL: '',
@@ -25,10 +26,7 @@ export class AdoptNow extends React.Component {
           breed: '',
           story: ''
         }
-      },
-      queue: new Queue().enqueue(
-        this.people[0]
-      )
+      }
     };
   }
 
@@ -76,24 +74,50 @@ export class AdoptNow extends React.Component {
 
   componentDidMount() {
     this.getQuedPets();
+    this.DequeuePeople();
   }
 
-  people = [
-    'Tauhida',
-    'Jack',
-    'Dana',
-    'Benedict Cumberbatch',
-    'Black Lively',
-    'Ellen Degeneres',
-    'Nick Cage',
-    `Nick Cage's Clone`,
-    'Cher',
-    'Mr. Bean',
-    'Mr. Snuffleuffagus',
-    'Bert',
-    'Juanberto',
-    'Jillberto'
-  ];
+
+
+  QueueUpPeople(people) {
+    let temp = new Queue();
+    for (let i = 0; i < people.length; i++) {
+      temp.enqueue(people[i]);
+    }
+    temp.enqueue('You!');
+    this.setState({
+      people: temp
+    })
+  }
+
+  DequeuePeople() {
+    setInterval(() => {
+      let temp = this.state.people;
+      if (temp.first.value !== 'You!') {
+        temp.dequeue();
+        fetch(
+          'https://tranquil-caverns-87214.herokuapp.com/api/cat',
+          { method: 'DELETE' }
+        ).then(() => {
+          this.setState({
+            people: temp
+          })
+        }).then(() => {
+          this.getQuedPets();
+        })
+
+      }
+    }, 3000)
+  }
+
+  componentWillMount() {
+    const people = ['Tauhida',
+      'Jack',
+      'Dana',
+    ];
+    this.QueueUpPeople(people);
+  }
+
   render() {
     return (
       <div className="AdoptNow">
@@ -138,7 +162,7 @@ export class AdoptNow extends React.Component {
           <li></li>
         </ul>
 
-        <button className="AdoptCatNow__button">
+        <button className="AdoptCatNow__button" onClick={e => this.AdoptCat()}>
           Adopt this Cat Now! (if it's your turn)
         </button>
 
@@ -181,12 +205,29 @@ export class AdoptNow extends React.Component {
           </li>
           <li></li>
         </ul>
-        <button className="AdoptDogNow__button">
+        <button className="AdoptDogNow__button" onClick={e => this.AdoptDog()}>
           Adopt this Dog Now! (if it's your turn)
         </button>
-        <List getPets={this.getQuedPets()}></List>
+        <List people={this.state.people}></List>
       </div>
     );
   }
 }
-//{/**/}
+/*
+  people = [
+    'Tauhida',
+    'Jack',
+    'Dana',
+    'Benedict Cumberbatch',
+    'Black Lively',
+    'Ellen Degeneres',
+    'Nick Cage',
+    `Nick Cage's Clone`,
+    'Cher',
+    'Mr. Bean',
+    'Mr. Snuffleuffagus',
+    'Bert',
+    'Juanberto',
+    'Jillberto'
+  ];
+*/
