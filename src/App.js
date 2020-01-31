@@ -19,7 +19,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          This is Petful
+          <h1>This is Petful</h1>
         </header>
         <Switch>
           <Route

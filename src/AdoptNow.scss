@@ -1,0 +1,22 @@
+main {
+  width: 100%;
+}
+.AdoptNow {
+  color: rgb(66, 4, 35);
+  background: rgb(247, 232, 227);
+  &__button {
+    background: rgb(49, 2, 49);
+    color: rgb(247, 232, 227);
+    width: 70px;
+    margin: 12px;
+  }
+  & ul {
+    list-style-type: none;
+  }
+  &__stats {
+    margin: 24px;
+  }
+  & img {
+    margin: 24px;
+  }
+}
