@@ -308,7 +308,7 @@ export class AdoptNow extends React.Component {
           <li>{renderbutton}</li>
         </ul>
         <div className="AdoptNow__alreadyAdopted">
-          {this.adoptedList()}
+          {/* {this.adoptedList()} */}
         </div>
       </main>
     );
