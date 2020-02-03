@@ -94,6 +94,7 @@ export class AdoptNow extends React.Component {
     }
     temp.enqueue('You!');
     this.setState({
+      ...this.state,
       people: temp,
       waitLength: people.length
     });
@@ -129,6 +130,7 @@ export class AdoptNow extends React.Component {
               turn = true;
             }
             this.setState({
+              ...this.state,
               people: temp,
               waitLength: wait,
               yourTurn: turn
@@ -145,6 +147,7 @@ export class AdoptNow extends React.Component {
           });
       } else {
         this.setState({
+          ...this.state,
           yourTurn: true
         });
       }
@@ -161,31 +164,33 @@ export class AdoptNow extends React.Component {
   }
 
   adoptedList() {
-    return this.state.alreadyAdopted.map(
-      animal => {
-        return (
-          <ul className="AdoptNow__adoptedAnimal">
-            <li>
-              {' '}
-              <img
-                src={animal.imageURL}
-                alt={
-                  animal.imageDescription
-                }
-                width="285"
-              ></img>
-            </li>
-            <li className="AdoptNow__name">
-              name: {animal.name}
-            </li>
-            <li className="AdoptNow__desc">
-              description:{' '}
-              {animal.description}
-            </li>
-          </ul>
-        );
-      }
-    );
+    if (this.state.alreadyAdopted) {
+      return this.state.alreadyAdopted.map(
+        animal => {
+          return (
+            <ul className="AdoptNow__adoptedAnimal">
+              <li>
+                {' '}
+                <img
+                  src={animal.imageURL}
+                  alt={
+                    animal.imageDescription
+                  }
+                  width="285"
+                ></img>
+              </li>
+              <li className="AdoptNow__name">
+                name: {animal.name}
+              </li>
+              <li className="AdoptNow__desc">
+                description:{' '}
+                {animal.description}
+              </li>
+            </ul>
+          );
+        }
+      );
+    }
   }
 
   render() {
