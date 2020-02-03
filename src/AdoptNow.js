@@ -110,13 +110,15 @@ export class AdoptNow extends React.Component {
         if (randompet > 0.5) {
           animalToAdopt =
             'https://tranquil-caverns-87214.herokuapp.com/api/cat';
-          adoptedAnimal = this.state
-            .upNext.cat;
+          adoptedAnimal = {
+            ...this.state.upNext.cat
+          };
         } else {
           animalToAdopt =
             'https://tranquil-caverns-87214.herokuapp.com/api/dog';
-          adoptedAnimal = this.state
-            .upNext.dog;
+          adoptedAnimal = {
+            ...this.state.upNext.dog
+          };
         }
         temp.dequeue();
         fetch(animalToAdopt, {
@@ -139,9 +141,11 @@ export class AdoptNow extends React.Component {
           .then(() => {
             this.setState({
               ...this.state,
-              alreadyAdopted: this.state.alreadyAdopted.push(
-                adoptedAnimal
-              )
+
+              alreadyAdopted: [
+                ...this.state
+                  .alreadyAdopted
+              ].push(adoptedAnimal)
             });
             this.getQuedPets();
           });
