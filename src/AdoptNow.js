@@ -317,6 +317,7 @@ export class AdoptNow extends React.Component {
           <li>{renderbutton}</li>
         </ul>
         <div className="AdoptNow__alreadyAdopted">
+          <h2>Recently adopted</h2>
           {this.adoptedList()}
         </div>
       </main>
