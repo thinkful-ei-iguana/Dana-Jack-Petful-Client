@@ -141,10 +141,9 @@ export class AdoptNow extends React.Component {
             });
           })
           .then(() => {
-            let alreadyAdopted = [
-              ...this.state
-                .alreadyAdopted
-            ].push(adoptedAnimal);
+            let alreadyAdopted = this.state.alreadyAdopted.push(
+              adoptedAnimal
+            );
             console.log(alreadyAdopted);
             this.setState({
               ...this.state
