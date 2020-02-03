@@ -104,7 +104,7 @@ export class AdoptNow extends React.Component {
     setInterval(() => {
       let adoptedAnimal;
       let temp = this.state.people;
-      if (temp.first.value !== 'you!') {
+      if (temp.first.value !== 'You!') {
         let randompet = Math.random();
         let animalToAdopt;
         if (randompet > 0.5) {
@@ -113,12 +113,14 @@ export class AdoptNow extends React.Component {
           adoptedAnimal = {
             ...this.state.upNext.cat
           };
+          console.log(adoptedAnimal);
         } else {
           animalToAdopt =
             'https://tranquil-caverns-87214.herokuapp.com/api/dog';
           adoptedAnimal = {
             ...this.state.upNext.dog
           };
+          console.log(adoptedAnimal);
         }
         temp.dequeue();
         fetch(animalToAdopt, {
@@ -279,7 +281,7 @@ export class AdoptNow extends React.Component {
           <li className="AdoptNow__desc">
             description:{' '}
             {
-              this.state.upNext.cat
+              this.state.upNext.dog
                 .description
             }
           </li>
