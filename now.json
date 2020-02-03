@@ -1,7 +1,6 @@
 {
   "version": 2,
   "name": "fifo-adoption",
-  "alias": "fifo-adoption",
   "routes": [
     {
       "src": "^/static/(.*)",

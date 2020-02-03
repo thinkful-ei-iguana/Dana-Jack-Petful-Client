@@ -113,7 +113,7 @@ export class AdoptNow extends React.Component {
             .upNext.cat;
         } else {
           animalToAdopt =
-            'https://tranquil-cavernsanimalToAdopt-87214.herokuapp.com/api/dog';
+            'https://tranquil-caverns-87214.herokuapp.com/api/dog';
           adoptedAnimal = this.state
             .upNext.dog;
         }
