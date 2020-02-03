@@ -12,6 +12,7 @@ export class AdoptNow extends React.Component {
         dog: {
           imageURL: '',
           imageDescription: '',
+          description: '',
           name: '',
           sex: '',
           age: 0,
@@ -21,6 +22,7 @@ export class AdoptNow extends React.Component {
         cat: {
           imageURL: '',
           imageDescription: '',
+          description: '',
           name: '',
           sex: '',
           age: 0,
@@ -29,6 +31,7 @@ export class AdoptNow extends React.Component {
         }
       },
       yourTurn: false,
+      alreadyAdopted: [],
       waitLength: 0
     };
   }
@@ -98,13 +101,26 @@ export class AdoptNow extends React.Component {
 
   DequeuePeople() {
     setInterval(() => {
+      let adoptedAnimal;
       let temp = this.state.people;
-      if (temp.first.value !== 'You!') {
+      if (temp.first.value !== 'you!') {
+        let randompet = Math.random();
+        let animalToAdopt;
+        if (randompet > 0.5) {
+          animalToAdopt =
+            'https://tranquil-caverns-87214.herokuapp.com/api/cat';
+          adoptedAnimal = this.state
+            .upNext.cat;
+        } else {
+          animalToAdopt =
+            'https://tranquil-cavernsanimalToAdopt-87214.herokuapp.com/api/dog';
+          adoptedAnimal = this.state
+            .upNext.dog;
+        }
         temp.dequeue();
-        fetch(
-          'https://tranquil-caverns-87214.herokuapp.com/api/cat',
-          { method: 'DELETE' }
-        )
+        fetch(animalToAdopt, {
+          method: 'DELETE'
+        })
           .then(() => {
             let turn = false;
             let wait =
@@ -119,6 +135,12 @@ export class AdoptNow extends React.Component {
             });
           })
           .then(() => {
+            this.setState({
+              ...this.state,
+              alreadyAdopted: this.state.alreadyAdopted.push(
+                adoptedAnimal
+              )
+            });
             this.getQuedPets();
           });
       } else {
@@ -136,6 +158,34 @@ export class AdoptNow extends React.Component {
       'Dana'
     ];
     this.QueueUpPeople(people);
+  }
+
+  adoptedList() {
+    return this.state.alreadyAdopted.map(
+      animal => {
+        return (
+          <ul className="AdoptNow__adoptedAnimal">
+            <li>
+              {' '}
+              <img
+                src={animal.imageURL}
+                alt={
+                  animal.imageDescription
+                }
+                width="285"
+              ></img>
+            </li>
+            <li className="AdoptNow__name">
+              name: {animal.name}
+            </li>
+            <li className="AdoptNow__desc">
+              description:{' '}
+              {animal.description}
+            </li>
+          </ul>
+        );
+      }
+    );
   }
 
   render() {
@@ -168,6 +218,13 @@ export class AdoptNow extends React.Component {
           <li className="AdoptNow__name">
             name:{' '}
             {this.state.upNext.cat.name}
+          </li>
+          <li className="AdoptNow__desc">
+            description:{' '}
+            {
+              this.state.upNext.cat
+                .description
+            }
           </li>
           <li className="AdoptNow__sex">
             sex:{' '}
@@ -209,6 +266,13 @@ export class AdoptNow extends React.Component {
             name:{' '}
             {this.state.upNext.dog.name}
           </li>
+          <li className="AdoptNow__desc">
+            description:{' '}
+            {
+              this.state.upNext.cat
+                .description
+            }
+          </li>
           <li className="AdoptNow__sex">
             sex:{' '}
             {this.state.upNext.dog.sex}
@@ -233,6 +297,9 @@ export class AdoptNow extends React.Component {
           </li>
           <li>{renderbutton}</li>
         </ul>
+        <div className="AdoptNow__alreadyAdopted">
+          {this.adoptedList()}
+        </div>
       </main>
     );
   }

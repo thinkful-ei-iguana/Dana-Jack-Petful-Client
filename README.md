@@ -16,6 +16,11 @@ fifo-adoption.now.sh
 Jack Pupel - full-stack engineer
 Dana Zinatbakhsh - full-stack engineer
 
+## Technology used
+
+React for the client
+Server made using Express and Node.js
+
 ## Screenshots
 
 ![image](https://user-images.githubusercontent.com/32424238/73579293-e0489f80-4436-11ea-9486-443e290a0b09.png)
