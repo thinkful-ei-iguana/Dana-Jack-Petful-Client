@@ -12,6 +12,7 @@ main {
   }
   & ul {
     list-style-type: none;
+    padding-inline-start: 0;
   }
   &__stats {
     margin: 24px;
